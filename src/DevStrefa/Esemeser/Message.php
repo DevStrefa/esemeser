@@ -1,6 +1,11 @@
 <?php
 namespace DevStrefa\Esemeser;
 
+/**
+ * Class Message
+ * @package DevStrefa\Esemeser
+ */
+
 class Message
 {
     private $clientName;

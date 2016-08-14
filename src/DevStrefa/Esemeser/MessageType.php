@@ -2,6 +2,10 @@
 
 namespace DevStrefa\Esemeser;
 
+/**
+ * Class MessageType
+ * @package DevStrefa\Esemeser
+ */
 
 
 class MessageType

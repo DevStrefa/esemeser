@@ -1,18 +1,42 @@
 <?php
 namespace DevStrefa\Esemeser;
 
+/**
+ * Library main class
+ *
+ * Esemeser is a simple library for sending Mobile Text messages through esemeser.pl official API
+ *
+ * @license https://opensource.org/licenses/MIT MIT
+ * @author Cichy <d3ut3r@gmail.com>
+ * @version 1.0.0
+ *
+ */
+
 class Esemeser
 {
-
+    /**
+     * @var string Sending messages API endpoint
+     */
     const SEND_URL='https://esemeser.pl/0api/wyslij.php';
 
+    /**
+     * @var string Checking balance API endpoint
+     */
     const CHECK_URL='https://esemeser.pl/0api/sprawdz.php';
+
 
     private $account;
     private $login;
     private $password;
 
 
+    /**
+     * Class Constructor
+     *
+     * @param string $account Account name
+     * @param string $login Account login
+     * @param string $password Account password
+     */
     public function __construct($account=null,$login=null,$password=null)
     {
          if ($account != null){
@@ -28,7 +52,14 @@ class Esemeser
          }
     }
 
-
+    /**
+     * Method returns number of possible to send messages of given type
+     *
+     * @param string $messageType Type of message
+     * @return int Number of messages possible to send
+     * @throws \InvalidArgumentException *Exception is thrown when provided type is incorrect*
+     * @throws \Exception *Exception is thrown when library wasn't able to get number of messages (ie. credentials was wrong)*
+     */
     public function checkBalance($messageType=null)
     {
         $query=array(
@@ -48,32 +79,6 @@ class Esemeser
         $queryString=http_build_query($query);
 
         $result=file_get_contents(self::CHECK_URL.'?'.$queryString);
-
-
-
-        return $result;
-
-    }
-
-
-    public function send(Message $message)
-    {
-        $query=array(
-            'konto'=>$this->getAccount(),
-            'login'=>$this->getLogin(),
-            'haslo'=>$this->getPassword(),
-            'nazwa'=>$message->getClientName(),
-            'telefon'=>$message->getPhoneNumber(),
-            'tresc'=>$message->getMessage()
-        );
-
-        if ($message->getMessageType() !== null){
-            $query['rodzaj']=$message->getMessageType();
-        }
-
-        $queryString=http_build_query($query);
-
-        $result=file_get_contents(self::SEND_URL.'?'.$queryString);
 
         if ($result < 0){
 
@@ -100,7 +105,64 @@ class Esemeser
     }
 
     /**
-     * @return mixed
+     * Method will send given message
+     *
+     * @param Message $message instance of message object
+     * @return bool Function return **true** if message was sent
+     * @throws \Exception *Exception is thrown when message wasn't send*
+     */
+    public function send(Message $message)
+    {
+        $query=array(
+            'konto'=>$this->getAccount(),
+            'login'=>$this->getLogin(),
+            'haslo'=>$this->getPassword(),
+            'nazwa'=>$message->getClientName(),
+            'telefon'=>$message->getPhoneNumber(),
+            'tresc'=>$message->getMessage()
+        );
+
+        if ($message->getMessageType() !== null){
+            $query['rodzaj']=$message->getMessageType();
+        }
+
+        $queryString=http_build_query($query);
+
+        $result=file_get_contents(self::SEND_URL.'?'.$queryString);
+
+        if ($result !='OK'){
+
+            switch ($result){
+
+                case '-1':
+                    throw new \Exception('Incorrect Account name');
+                    break;
+                case '-2':
+                    throw new \Exception('Incorrect login or password');
+                    break;
+                case '-3':
+                    throw new \Exception('Incorrect phone number');
+                    break;
+                case 'NIE':
+                    throw new \Exception('Message wasn\'t sent');
+                    break;
+                default:
+                    throw new \Exception('Unknown Error');
+                    break;
+
+            }
+
+        } else {
+
+            return true;
+
+        }
+
+    }
+
+    /**
+     * Method returns account name
+     * @return string
      */
     public function getAccount()
     {
@@ -108,7 +170,8 @@ class Esemeser
     }
 
     /**
-     * @param mixed $account
+     * Method for setting account name
+     * @param string $account Account name
      * @return Esemeser
      */
     public function setAccount($account)
@@ -118,7 +181,8 @@ class Esemeser
     }
 
     /**
-     * @return mixed
+     * Method returns account login
+     * @return string
      */
     public function getLogin()
     {
@@ -126,7 +190,8 @@ class Esemeser
     }
 
     /**
-     * @param mixed $login
+     * Method for setting login to account
+     * @param string $login
      * @return Esemeser
      */
     public function setLogin($login)
@@ -136,7 +201,8 @@ class Esemeser
     }
 
     /**
-     * @return mixed
+     * Method return password
+     * @return string
      */
     public function getPassword()
     {
@@ -144,7 +210,8 @@ class Esemeser
     }
 
     /**
-     * @param mixed $password
+     * Method for setting password to account
+     * @param string $password
      * @return Esemeser
      */
     public function setPassword($password)
