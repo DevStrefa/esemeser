@@ -2,8 +2,14 @@
 namespace DevStrefa\Esemeser;
 
 /**
- * Class Message
- * @package DevStrefa\Esemeser
+ * Message class
+ *
+ * Message class is simple class to store basic message information such as phone number, content and name of recipient
+ *
+ * @license https://opensource.org/licenses/MIT MIT
+ * @author Cichy <d3ut3r@gmail.com>
+ * @version 1.0.0
+ *
  */
 
 class Message
@@ -13,6 +19,14 @@ class Message
     private $message;
     private $messageType;
 
+    /**
+     * Message constructor.
+     *
+     * @param string $clientName Client name
+     * @param string $phoneNumber Recipient phone number
+     * @param string $message Message content
+     * @param string $messageType Message type
+     */
     public function __construct($clientName=null,$phoneNumber=null,$message=null,$messageType=null)
     {
 

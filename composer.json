@@ -1,0 +1,26 @@
+{
+    "name": "devstrefa/esemeser",
+    "type": "library",
+    "description": "PHP Library for sending SMS through esemeser.pl API",
+    "keywords": ["SMS","esemeser","esemeser.pl"],
+    "homepage": "https://github.com/DevStrefa/esemeser",
+    "license": "MIT",
+    "authors":[
+        {
+            "name": "Cichy",
+            "email":"d3ut3r@gmail.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.3.2"        
+    },
+
+    "autoload": {
+        "psr-4": {"DevStrefa\\": "src/DevStrefa"}
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.0.x-dev"
+        }
+    }
+}
