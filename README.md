@@ -4,10 +4,10 @@ PHP Library designed to sending SMS messages through esemeser.pl API
 
 ### Before you use it!
 
-Esemeser.pl is Polish service for sending SMS messages, so remember before you install this library you can send messages only to Polish phone numbers
-those numbers must be in format: xxxxxxxxx (9 digits), other number probably will not work. 
+Esemeser.pl is a Polish service for sending SMS messages, so remember that You can send messages only to Polish phone numbers
+those numbers must be in format: xxxxxxxxx (9 digits), other numbers probably will not work. 
 
-This library use [file_get_contents](http://php.net/manual/en/function.file-get-contents.php) function so before You use it make sure you have properly 
+This library using [file_get_contents](http://php.net/manual/en/function.file-get-contents.php) function, so before You use it make sure you have properly 
 configured environment check if your [allow_url_fopen](http://php.net/manual/en/filesystem.configuration.php) is set to "1" 
 
 ### How to install
@@ -95,4 +95,3 @@ You can see Changelog for this project [here](https://github.com/DevStrefa/eseme
 ### License
 
 Whole code in this repository is Under [MIT license](https://github.com/DevStrefa/esemeser/blob/master/LICENSE)
-
