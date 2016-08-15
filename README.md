@@ -21,7 +21,7 @@ Library is compatible with [composer](https://getcomposer.org/) so You can insta
 
 to Your composer.json file
 
-You can also download zip file and include all necessery files by yourself
+You can also download zip file and include all necessary files by yourself
 
 ### How to use
 
@@ -85,7 +85,7 @@ try {
 
 ```
 
-For more informations about library please read genereated [documentation](http://devstrefa.github.io/esemeserDoc/).
+For more information about library please read generated [documentation](http://devstrefa.github.io/esemeserDoc/).
 
 
 ## Changelog
