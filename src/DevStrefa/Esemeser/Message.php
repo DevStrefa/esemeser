@@ -8,7 +8,7 @@ namespace DevStrefa\Esemeser;
  *
  * @license https://opensource.org/licenses/MIT MIT
  * @author Cichy <d3ut3r@gmail.com>
- * @version 1.0.0
+ * @version 1.1.0
  *
  */
 

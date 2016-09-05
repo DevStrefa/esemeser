@@ -8,7 +8,7 @@ namespace DevStrefa\Esemeser;
  *
  * @license https://opensource.org/licenses/MIT MIT
  * @author Cichy <d3ut3r@gmail.com>
- * @version 1.0.0
+ * @version 1.1.0
  *
  */
 
@@ -28,6 +28,7 @@ class Esemeser
     private $account;
     private $login;
     private $password;
+    private $requestMethod;
 
 
     /**
@@ -50,6 +51,44 @@ class Esemeser
          if ($password!=null){
              $this->setPassword($password);
          }
+
+         //default request method is set to file_get_contents
+         $this->requestMethod='fgc';
+
+    }
+
+    /**
+     * Set mechanism used to make requests to API (Allowed values: fgc OR curl) file_get_contents is default
+     *
+     * @param $requestMethod
+     * @throws \InvalidArgumentException *Exception is thrown when invalud request method is provided as argument*
+     */
+    public function setRequestMethod($requestMethod){
+        if ($requestMethod != 'fgc' && $requestMethod !='curl'){
+            throw new \InvalidArgumentException('Invalid Request Method');
+        }
+    }
+
+    /**
+     * @param string $url
+     * @return mixed | string
+     */
+    private function makeRequest($url)
+    {
+        if ($this->requestMethod == 'fgc'){
+
+            return file_get_contents($url);
+
+        } elseif ($this->requestMethod == 'curl'){
+
+            $curl = curl_init();
+            curl_setopt_array($curl, array(
+                CURLOPT_RETURNTRANSFER => 1,
+                CURLOPT_URL => $url
+            ));
+
+            return curl_exec($curl);
+        }
     }
 
     /**
@@ -78,7 +117,7 @@ class Esemeser
 
         $queryString=http_build_query($query);
 
-        $result=file_get_contents(self::CHECK_URL.'?'.$queryString);
+        $result=$this->makeRequest(self::CHECK_URL.'?'.$queryString);
 
         if ($result < 0){
 
@@ -128,7 +167,7 @@ class Esemeser
 
         $queryString=http_build_query($query);
 
-        $result=file_get_contents(self::SEND_URL.'?'.$queryString);
+        $result=$this->makeRequest(self::SEND_URL.'?'.$queryString);
 
         if ($result !='OK'){
 
